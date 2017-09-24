@@ -74,9 +74,9 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label col-sm-2" for="price">Price <br> ( ক্রয় মূল্য )</label>
+          <label class="control-label col-sm-2" for="input_price">Price <br> ( ক্রয় মূল্য )</label>
           <div class="col-sm-4">
-            <input type="text" class="form-control" name="price" id="input_price" placeholder="Input Price">
+            <input type="text" class="form-control" name="input_price" id="input_price" placeholder="Input Price">
           </div>
           <label class="control-label col-sm-2" for="insurance_value">Insurance Value <br> ( ইন্সুরেন্স মূল্য )</label>
           <div class="col-sm-4">

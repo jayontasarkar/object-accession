@@ -31,6 +31,7 @@ class CreateAccessionsTable extends Migration
             $table->string('Personal_info', 100)->nullable();
             $table->string('propsed_price', 100)->nullable();
             $table->string('branch_museum', 100)->nullable();
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

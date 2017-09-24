@@ -18,7 +18,7 @@
 				<button type="submit" class="btn btn-primary btn-sm">SEARCH</button>
 			</form>
     	</div>
-		<table class="table table-hover table-bordered">
+		<table class="table table-hover table-bordered datatable">
 			<thead>
 				<tr>
 					<th>সংগ্রহভুক্তি নম্বর</th>
@@ -43,13 +43,23 @@
 					<td>{{ $accession->measurement }}</td>
 					<td>
 						<a href="{{ route('accessions.show', [$accession]) }}" class="btn btn-info btn-xs">
-							<span class="glyphicon glyphicon-search"></span>
+							<span class="glyphicon glyphicon glyphicon-eye-open
+"></span>
 						</a>
 					</td>
 				</tr>
 				@endforeach
 			</tbody>
 		</table>
+		{{ $accessions->links() }}
     </div>
   </div>
 @stop
+@section('script')
+@include('layouts.common.dt-export', [
+    'heading' => " জাদুঘরের নিদর্শনসমূহের তালিকা/লিস্ট",
+    'columns' => "0, 1, 2, 3, 4, 5"
+])
+
+@stop
+
