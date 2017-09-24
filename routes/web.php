@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
 });
 
 Route::get('accessions', 'AccessionsController@index')->name('accessions.index');

@@ -5,13 +5,23 @@
     <div class="panel-heading" style="font-size: 1.2em;">
         জাদুঘরের নিদর্শনসমূহের তালিকা/লিস্ট
     </div>
+
     <div class="panel-body">
     	<div class="well">
-			<form action="" method="GET" role="form" class="form-inline">
+			<form action="" method="GET" role="form" class="form form-inline">
 				<div class="form-group">
-					<select name="type" id="" class="form-control">
-						<option value="approved">অনুমোদনকৃত নিদর্শন</option>
-						<option value="pending">অপেক্ষমান অনুমোদন</option>
+					<select name="status" id="" class="form-control">
+						<option value="">নিদর্শনের স্ট্যাটাস সিলেক্ট করুন</option>
+						<option value="approved" {{ Request::input('status') == 'approved' ? 'selected' : '' }}>অনুমোদনকৃত নিদর্শন</option>
+						<option value="pending" {{ Request::input('status') == 'pending' ? 'selected' : '' }}>অপেক্ষমান অনুমোদন</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<select name="classification" id="" class="form-control">
+						<option value="">নিদর্শনের শ্রেণী বিভাগ সিলেক্ট করুন</option>
+						@foreach($classifications as $classification)
+						<option value="{{$classification->id}}" {{ Request::input('classification') == $classification->id ? 'selected' : '' }}>{{$classification->title_bn}}</option>
+						@endforeach
 					</select>
 				</div>
 
@@ -28,6 +38,7 @@
 					<th>সংগ্রহের ধরন</th>
 					<th>নিদর্শনের শ্রেণী বিভাগ</th>
 					<th>পরিমাপ</th>
+					<th>স্ট্যাটাস</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -41,6 +52,7 @@
 					<td>{{ $accession->made_of_collection }}</td>
 					<td>{{ $accession->classification->title_bn }}</td>
 					<td>{{ $accession->measurement }}</td>
+					<td>{{ $accession->status ? 'অনুমোদিত' : 'অননুমোদিত' }}</td>
 					<td>
 						<a href="{{ route('accessions.show', [$accession]) }}" class="btn btn-info btn-xs">
 							<span class="glyphicon glyphicon glyphicon-eye-open
@@ -58,8 +70,16 @@
 @section('script')
 @include('layouts.common.dt-export', [
     'heading' => " জাদুঘরের নিদর্শনসমূহের তালিকা/লিস্ট",
-    'columns' => "0, 1, 2, 3, 4, 5"
+    'columns' => "0, 1, 2, 3, 4, 5, 6"
 ])
-
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".form").on('submit', function() {
+	        $(this).find(":input").filter(function(){ return !this.value; }).attr("disabled", "disabled");
+	        $(this).find(":select").filter(function(){ return !this.value; }).attr("disabled", "disabled");
+	        return true;
+	    });
+	});
+</script>
 @stop
 

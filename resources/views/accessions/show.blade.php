@@ -23,8 +23,8 @@
 							<td>{{$accession->accession_no_from}} হইতে {{$accession->accession_no_to}}</td>
 							<td>মোট নিদর্শন সংখ্যা</td>
 							<td>{{$accession->total_number_of_object}}</td>
-						</tr>	
-						<tr>	
+						</tr>
+						<tr>
 							<td>সংগ্রহের তারিখ</td>
 							<td>{{$accession->collection_date->format('M d, Y')}}</td>
 							<td>নথি নং</td>
@@ -32,7 +32,7 @@
 						</tr>
 						<tr>
 							<td>ইন্সুরেন্স মূল্য</td>
-		                    <td>{{$accession->insurance_value}}</td>	
+		                    <td>{{$accession->insurance_value}}</td>
 							<td>নিদর্শনের সংক্ষিপ্ত বিবরণ</td>
 							<td>{{$accession->description_of_object}}</td>
 						</tr>
@@ -54,13 +54,13 @@
 							 <td>নিদর্শনের স্ট্যাটাস</td>
 							 <td>{{ $accession->status ? 'অনুমোদিত' : 'অননুমোদিত' }}</td>
 						</tr>
-						<tr>	
+						<tr>
 							<td>সংগ্রহের ধরন</td>
 							<td>{{$accession->made_of_collection}}</td>
 							<td>ক্রয় মূল্য</td>
 							<td>{{$accession->input_price}}</td>
 						</tr>
-						<tr>	
+						<tr>
 							<td>ব্যাক্তিগত তথ্য</td>
 							<td>{{$accession->Personal_info}}</td>
 							<td>বিভাগ/শাখা জাদুঘর</td>
@@ -73,7 +73,10 @@
 					<p style="margin-top: 30px;"><strong>সকল অনুমোদনকারীর মতামত:</strong></p>
 					@foreach($accession->approvals as $approval)
 						<div class="well">
-						
+							<p><strong>সংগ্রহভুক্তির আবেদন {{ $approval->status == 3 ? 'অনুমোদন' : 'বাতিল ' }} করা হয়েছে | {{ $approval->status == 3 ? 'অনুমোদন' : 'বাতিল ' }} করেছেন - {{ $approval->role->text }}</strong></p>
+							@if($approval->notes)
+							<small>মন্তব্য: {{ $approval->notes }}</small>
+							@endif
 						</div>
 					@endforeach
 				@endif

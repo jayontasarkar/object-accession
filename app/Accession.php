@@ -21,6 +21,11 @@ class Accession extends Model
 
     protected $dates = ['collection_date'];
 
+    public function scopeFilter($query, $filters)
+    {
+        return $filters->apply($query);
+    }
+
     /**
      * Mutator for AccessionDate attribute.
      *

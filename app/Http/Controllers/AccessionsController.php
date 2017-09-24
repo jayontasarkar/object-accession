@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\{Accession, Approval};
+use App\Accession;
+use App\Approval;
+use App\Classification;
+use App\Http\Filters\AccessionsFilter;
 use Illuminate\Http\Request;
 
 class AccessionsController extends Controller
 {
-    public function index()
+    public function index(AccessionsFilter $filters)
     {
-        $accessions = Accession::with('classification')->latest()->paginate(8);
-
-        return view('accessions.index', compact('accessions'));
+        $accessions = Accession::filter($filters)->with('classification')->latest()->paginate(8);
+        $classifications = Classification::all();
+        return view('accessions.index', compact('accessions', 'classifications'));
     }
 
     public function create()
@@ -36,7 +39,7 @@ class AccessionsController extends Controller
             ->where('role_id', $role)
             ->count();
 
-        $accession->load('classification', 'approvals');
+        $accession->load('classification', 'approvals.role');
         return view('accessions.show', compact('accession', 'approved'));
     }
 
@@ -47,6 +50,12 @@ class AccessionsController extends Controller
             'status'  => $request->input('status'),
             'notes'   => $request->input('notes')
         ]);
+
+        if ($request->user()->role_id == 4) {
+            $accession->update([
+                'status' => $request->input('status') == 3 ? true : false
+            ]);
+        }
 
         return back()
             ->withSuccess('নিদর্শনের জন্য আপনার মতামত প্রদান করা হয়েছে');
