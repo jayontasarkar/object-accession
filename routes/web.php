@@ -1,22 +1,16 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/application', function () {
-    return view('application');
-});
+
+Route::get('accessions', 'AccessionsController@index')->name('accessions.index');
+Route::get('accessions/create', 'AccessionsController@create')->name('accessions.create');
+Route::get('accessions/{accession}', 'AccessionsController@show')->name('accessions.show');
+Route::post('accessions', 'AccessionsController@store')->name('accessions.store');
+// Approval System
+Route::get('accessions/status/pending', 'AccessionApprovalsController@pending')->name('accessions.pending.index');
+Route::get('accessions/status/approved', 'AccessionApprovalsController@approved')->name('accessions.approved.index');
 
 Auth::routes();
 
